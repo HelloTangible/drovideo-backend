@@ -10,6 +10,14 @@
     "type": "git",
     "url": "github.com/TangibleThings/drovideo-backend"
   },
+  "dependencies": {
+    "drovideo-frontend": "~0.0.0",
+    "hapi": "^15.1.1",
+    "inert": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  },
   "keywords": [
     "drone",
     "photography",

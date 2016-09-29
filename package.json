@@ -1,0 +1,22 @@
+{
+  "name": "drovideo-backend",
+  "version": "0.0.1",
+  "description": "Backend APIs for the Drovideo Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/TangibleThings/drovideo-backend"
+  },
+  "keywords": [
+    "drone",
+    "photography",
+    "api",
+    "social",
+    "Xervo"
+  ],
+  "author": "Brandon Satrom (bsatrom@gmail.com)",
+  "license": "MIT"
+}

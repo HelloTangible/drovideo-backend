@@ -15,7 +15,7 @@ server.register(require('inert'), (err) => {
   if (process.env.NODE_ENV === 'development') {  
     path = '/static';
   } else {
-    path = 'node_modules/my-website-module/assets';
+    path = 'node_modules/drovideo-frontend/assets';
   }
   
   server.route({

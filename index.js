@@ -3,7 +3,7 @@
 const Hapi = require('hapi');
 
 const server = new Hapi.Server();
-server.connection({ port: 80 });
+server.connection({ port: process.env.PORT || 3000 });
 
 server.register(require('inert'), (err) => {
   var path;

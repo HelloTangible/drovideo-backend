@@ -11,7 +11,7 @@
     "url": "github.com/TangibleThings/drovideo-backend"
   },
   "dependencies": {
-    "drovideo-frontend": "^0.0.4",
+    "drovideo-frontend": "^0.0.5",
     "hapi": "^15.1.1",
     "inert": "^4.0.2",
     "typings": "^1.4.0"

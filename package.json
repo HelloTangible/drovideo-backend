@@ -14,6 +14,7 @@
     "drovideo-frontend": "^0.0.5",
     "hapi": "^15.1.1",
     "inert": "^4.0.2",
+    "mongoose": "^4.6.4",
     "typings": "^1.4.0"
   },
   "devDependencies": {

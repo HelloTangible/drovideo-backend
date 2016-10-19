@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dbURI = 'mongodb://drovideo:KUE74msnfFZBMm@olympia.modulusmongo.net:27017/idumi5Ri';
+const dbURI = process.env.MONGO_URI;
 
 mongoose.connect(dbURI);
 

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var commentObject = require('./comment');
 
 var videoSchema = new mongoose.Schema({
   name: String,
@@ -10,7 +11,7 @@ var videoSchema = new mongoose.Schema({
   video_uri: String,
   hidden: { type: Boolean, default: false},
   tags: Array,
-  comments: [{ body: "string", date: Date }],
+  comments: [commentObject.schema],
   favs: Number
 });
 

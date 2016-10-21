@@ -1,15 +1,47 @@
+'use strict';
+
 var Video = require('../model/video');
+
 var responses = require('../config/json_response.js')
 
 module.exports = [
   //Video Methods
   {
     method: 'GET',
+    path: '/api/v1/videos',
+    config: { auth: 'token' },
+    handler: (req, res) => {
+      Video.find({}, function (err, videos) {
+        let output;
+
+        if (err) {
+          output = responses.failureMessage;
+          output.message = err;
+
+          console.log(err);
+        } else {
+          output = responses.successMessage;
+          
+          if (!videos) {
+            output.message = "No videos found";
+          } else {
+            output.message = "Videos found";
+            output.count = videos.count;
+            output.data = videos;
+          }  
+        }
+
+        return res(output).type('application/json');
+      }).select('-__v');
+    }
+  },
+  {
+    method: 'GET',
     path: '/api/v1/videos/{id}',
     config: { auth: 'token' },
     handler: (req, res) => {
       Video.findById(req.params.id, function (err, video) {
-        var output;
+        let output;
 
         if (err) {
           output = responses.failureMessage;
@@ -28,7 +60,7 @@ module.exports = [
         }
 
         return res(output).type('application/json');
-      });
+      }).select('-__v');
     }
   },
   {
@@ -54,7 +86,7 @@ module.exports = [
         favs: 0
       },
      (err, video) => {
-        var output;
+        let output;
         
         if (err) {
           output = responses.failureMessage;
@@ -81,7 +113,7 @@ module.exports = [
       var condition = { _id: req.params.id };
 
       Video.remove(condition, (err) => {
-        var output;
+        let output;
 
         if (err) {
           output = responses.failureMessage;
@@ -121,7 +153,7 @@ module.exports = [
         video_uri: request.video_uri 
       },
      (err, video) => {
-        var output;
+        let output;
         
         if (err) {
           output = responses.failureMessage;
@@ -149,7 +181,7 @@ module.exports = [
       Video.findByIdAndUpdate(req.params.id, 
       { $inc: { favs: 1 } },
       function (err, video) {
-        var output;
+        let output;
 
         if (err) {
           output = responses.failureMessage;
@@ -179,7 +211,7 @@ module.exports = [
       Video.findByIdAndUpdate(req.params.id, 
       { $inc: { favs: -1 } },
       function (err, video) {
-        var output;
+        let output;
 
         if (err) {
           output = responses.failureMessage;
@@ -200,6 +232,66 @@ module.exports = [
         return res(output).type('application/json');
       });
     }
-  }
+  },
   // Comments Methods
+  {
+    method: 'GET',
+    path: '/api/v1/videos/{id}/comments',
+    config: { auth: 'token' },
+    handler: (req, res) => {
+      Video.findById(req.params.id, 
+      function (err, video) {
+        let output;
+
+        if (err) {
+          output = responses.failureMessage;
+          output.message = err;
+
+          console.log(err);
+        } else {
+          output = responses.successMessage;
+          
+          if (!video) {
+            output.message = "No video found by that id";
+          } else {
+            output.message = "Comments found";
+            output.data = video.comments;
+          }  
+        }
+
+        return res(output).type('application/json');
+      });
+    }
+  },
+  {
+    method: 'PUT',
+    path: '/api/v1/videos/{id}/comments/add',
+    config: { auth: 'token' },
+    handler: (req, res) => {
+      let comment = JSON.parse(req.payload.comment);
+
+      Video.update({ _id: req.params.id }, 
+      { $push: { 'comments': { body: comment.body, commenter: comment.commenter } } },
+      function (err, video) {
+        let output;
+
+        if (err) {
+          output = responses.failureMessage;
+          output.message = err;
+
+          console.log(err);
+        } else {
+          output = responses.successMessage;
+          
+          if (!video) {
+            output.message = "No video found by that id";
+          } else {
+            output.message = "Comment added";
+          }  
+        }
+
+        return res(output).type('application/json');
+      });
+    }
+  }
 ];

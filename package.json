@@ -11,9 +11,13 @@
     "url": "github.com/TangibleThings/drovideo-backend"
   },
   "dependencies": {
+    "boom": "^4.2.0",
     "drovideo-frontend": "^0.0.5",
+    "glob": "^7.1.1",
     "hapi": "^15.1.1",
+    "hapi-auth-jwt": "^4.0.0",
     "inert": "^4.0.2",
+    "jwt-simple": "^0.3.1",
     "mongoose": "^4.6.4",
     "typings": "^1.4.0"
   },
@@ -27,6 +31,6 @@
     "social",
     "Xervo"
   ],
-  "author": "Brandon Satrom (bsatrom@gmail.com)",
+  "author": "Brandon Satrom (brandon@hellotangible.com)",
   "license": "MIT"
 }

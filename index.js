@@ -3,13 +3,28 @@
 require('./model/db');
 
 const Hapi = require('hapi');
+var Path = require('path');
 
 var routes = require('./config/routes');
+var staticPath = require('./config/static_path');
+var goodConfig = require('./config/good-config.js')
 
-const server = new Hapi.Server();
+const server = new Hapi.Server({
+    connections: {
+        routes: {
+            files: {
+                relativeTo: Path.join(__dirname, staticPath)
+            }
+        }
+    }
+});
+
 server.connection({ port: process.env.PORT || 3000 });
 
-server.register([require('inert'), require('hapi-auth-jwt')], (err) => {
+server.register([require('inert'), require('hapi-auth-jwt'), {
+  register: require('good'),
+  goodConfig
+}], (err) => {
 
   if (err) {
     throw err;

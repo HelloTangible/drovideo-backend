@@ -1,5 +1,7 @@
 'use strict';
 
+var Boom = require('boom');
+
 var Video = require('../model/video');
 
 var responses = require('../config/json_response.js')
@@ -23,15 +25,14 @@ module.exports = [
           output = responses.successMessage;
           
           if (!videos) {
-            output.message = "No videos found";
+            return res(Boom.notFound('No videos found'));
           } else {
             output.message = "Videos found";
             output.count = videos.count;
             output.data = videos;
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       }).select('-__v');
     }
   },
@@ -52,14 +53,13 @@ module.exports = [
           output = responses.successMessage;
           
           if (!video) {
-            output.message = "No video found by that id";
+            return res(Boom.notFound('No video found by that id'));
           } else {
             output.message = "Video found";
             output.data = video;
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       }).select('-__v');
     }
   },
@@ -89,19 +89,14 @@ module.exports = [
         let output;
         
         if (err) {
-          output = responses.failureMessage;
-          output.message = err;
-
-          console.log(err);
+          return res(Boom.badImplementation(err));
         } else {
           output = responses.successMessage;
           output.message = "Video successfully created";
           output.data = { id: video._id };
 
-          console.log('Video created: ' + video);
+          return res(output).code(201);
         }
-
-        return res(output).code(201).type('application/json');
       });
     },
   },
@@ -116,16 +111,13 @@ module.exports = [
         let output;
 
         if (err) {
-          output = responses.failureMessage;
-          output.message = err;
-
-          console.log(err);
+          return res(Boom.badImplementation(err));
         } else {
           output = responses.successMessage;
           output.message = "Video successfully deleted";
-        }
 
-        return res(output).code(202).type('application/json');
+          return res(output).code(202);
+        }
       });
       
     }
@@ -156,19 +148,14 @@ module.exports = [
         let output;
         
         if (err) {
-          output = responses.failureMessage;
-          output.message = err;
-
-          console.log(err);
+          return res(Boom.badImplementation(err));
         } else {
           output = responses.successMessage;
           output.message = "Video successfully updated";
           output.data = { id: video._id };
 
-          console.log('Video updated: ' + video);
+           return res(output);
         }
-
-        return res(output).type('application/json');
       });
     }
   },
@@ -192,14 +179,13 @@ module.exports = [
           output = responses.successMessage;
           
           if (!video) {
-            output.message = "No video found by that id";
+            return res(Boom.notFound('No video found by that id'));
           } else {
             output.message = "Video favorited";
             output.data = video;
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       });
     }
   },
@@ -222,14 +208,13 @@ module.exports = [
           output = responses.successMessage;
           
           if (!video) {
-            output.message = "No video found by that id";
+            return res(Boom.notFound('No video found by that id'));
           } else {
             output.message = "Favorite removed";
             output.data = video;
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       });
     }
   },
@@ -252,14 +237,13 @@ module.exports = [
           output = responses.successMessage;
           
           if (!video) {
-            output.message = "No video found by that id";
+            return res(Boom.notFound('No video found by that id'));
           } else {
             output.message = "Comments found";
             output.data = video.comments;
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       });
     }
   },
@@ -284,13 +268,12 @@ module.exports = [
           output = responses.successMessage;
           
           if (!video) {
-            output.message = "No video found by that id";
+            return res(Boom.notFound('No video found by that id'));
           } else {
             output.message = "Comment added";
+            return res(output);
           }  
         }
-
-        return res(output).type('application/json');
       });
     }
   }

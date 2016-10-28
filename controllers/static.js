@@ -1,18 +1,26 @@
-var path;
+var staticPath = require('../config/static_path');
 
-if (process.env.NODE_ENV === 'development') {
-  path = '/static';
-} else {
-  path = 'node_modules/drovideo-frontend/assets';
+var staticConfig = (request, reply) => {
+  return reply.file(`${staticPath}/index.html`, { confine: false });
 }
 
 module.exports = [
   {
     method: 'GET',
+    path: '/home',
+    handler: staticConfig
+  },
+  {
+    method: 'GET',
+    path: '/map',
+    handler: staticConfig
+  },
+  {
+    method: 'GET',
     path: '/{param*}',
     handler: {
       directory: {
-        path: path
+        path: staticPath
       }
     }
   }

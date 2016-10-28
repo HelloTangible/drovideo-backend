@@ -10,7 +10,7 @@ module.exports = {
         }, {
             module: 'good-console'
         }, 'stdout'],
-        myFileReporter: [{
+        /*myFileReporter: [{
             module: 'good-squeeze',
             name: 'Squeeze',
             args: [{ ops: '*' }]
@@ -19,7 +19,7 @@ module.exports = {
             name: 'SafeJson'
         }, {
             module: 'good-file',
-            args: ['./logs/api_log']
-        }]
+            args: ['./logs/api_log.json']
+        }]*/
     }
 };

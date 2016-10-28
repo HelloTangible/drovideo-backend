@@ -9,21 +9,15 @@ var routes = require('./config/routes');
 var staticPath = require('./config/static_path');
 var goodConfig = require('./config/good-config.js')
 
-const server = new Hapi.Server({
-    connections: {
-        routes: {
-            files: {
-                relativeTo: Path.join(__dirname, staticPath)
-            }
-        }
-    }
-});
+const server = new Hapi.Server();
+
+console.log(`Relative: ${Path.join(__dirname, staticPath)}`);
 
 server.connection({ port: process.env.PORT || 3000 });
 
 server.register([require('inert'), require('hapi-auth-jwt'), {
   register: require('good'),
-  goodConfig
+  options: goodConfig
 }], (err) => {
 
   if (err) {
